@@ -10,6 +10,7 @@ export const mainConfig: Configuration = {
    */
   entry: './src/index.tsx',
   // Put your normal webpack config below here
+  
   module: {
     rules,
   },

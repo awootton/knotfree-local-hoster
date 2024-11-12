@@ -8,6 +8,7 @@ import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
+import { Configuration } from 'webpack';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
@@ -19,45 +20,50 @@ const config: ForgeConfig = {
 
   rebuildConfig: {},
   makers: [
-      new MakerSquirrel({}), 
-      new MakerZIP({}, ['darwin']), 
-      new MakerRpm({}), 
-      new MakerDeb({}),
-      {
-        name: '@electron-forge/maker-dmg',
-        config: {
-          background: './assets/dmg-background.png',
-          format: 'ULFO'
+    new MakerSquirrel({}),
+    new MakerZIP({}, ['darwin']),
+    new MakerRpm({}),
+    new MakerDeb({}),
+    {
+      name: '@electron-forge/maker-dmg',
+      config: {
+        background: './assets/dmg-background.png',
+        format: 'ULFO'
+      }
+    },
+    {
+      name: '@electron-forge/maker-deb',
+      config: {
+        options: {
+          maintainer: 'Alan Tracey Wootton',
+          homepage: 'https://github.com/awootton/knotfree-local-hoster'
         }
-      },
-      {
-        name: '@electron-forge/maker-deb',
-        config: {
-          options: {
-            maintainer: 'Alan Tracey Wootton',
-            homepage: 'https://github.com/awootton/knotfree-local-hoster'
-          }
-        }
-      }    
+      }
+    }
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
-    new WebpackPlugin({
-      mainConfig,
-      renderer: {
-        config: rendererConfig,
-        entryPoints: [
-          {
+
+    //new WebpackPlugin(myWebpackConfig),
+    {
+      name: '@electron-forge/plugin-webpack',
+      config: {
+        mainConfig: mainConfig , // './webpack.main.config.ts',
+        renderer: {
+          config: rendererConfig, // './webpack.renderer.config.ts',
+          entryPoints: [{
+            name: 'main_window',
             html: './src/index.html',
             js: './src/renderer.ts',
-            name: 'main_window',
             preload: {
-              js: './src/preload.ts',
-            },
-          },
-        ],
-      },
-    }),
+              js: './src/preload.ts'
+            }
+          }]
+        }
+      }
+    },
+
+
     // Fuses are used to enable/disable various Electron functionality
     // at package time, before code signing the application
     new FusesPlugin({
@@ -89,3 +95,24 @@ const config: ForgeConfig = {
 };
 
 export default config;
+
+// const myWebpackConfig : WebpackPluginConf = {
+//   mainConfig : {
+
+//   },
+//   renderer: {
+//   config: rendererConfig,
+//   entryPoints: [
+//     {
+//       html: './src/index.html',
+//       js: './src/renderer.ts',
+//       name: 'main_window',
+//       preload: {
+//         js: './src/preload.ts',
+//       },
+//     },
+//   ],
+// },
+// }
+
+

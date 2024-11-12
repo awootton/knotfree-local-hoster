@@ -1,11 +1,11 @@
 
 // a react dialog that shows the log
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material'
 import './LogDialog.css'
 
-// import { packets } from 'knotfree-ts-lib'
-import * as packets from 'knotfree-ts-lib/src/packets' // this one is better when it works
+import { packets } from 'knotfree-ts-lib'
+// import * as packets from 'knotfree-ts-lib/src/packets' // this one is better when it works
 
 var logArray: packets.Universal[] = []
 export function addLogFunc(u: packets.Universal) {

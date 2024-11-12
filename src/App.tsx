@@ -10,10 +10,10 @@ import './App.css'
 import {ShowCalls,addCallFunc} from './components/ShowCalls'
 import {LogDialog,addLogFunc} from './components/LogDialog'
 
-// import {packets} from "knotfree-ts-lib"
-// import {types} from "knotfree-ts-lib"
-import * as packets from 'knotfree-ts-lib/src/packets'
-import * as types from 'knotfree-ts-lib/src/types'
+import {packets} from "knotfree-ts-lib"
+import {types} from "knotfree-ts-lib"
+// damn you webpack5, bite me import * as packets from 'knotfree-ts-lib/src/packets'
+// import * as types from 'knotfree-ts-lib/src/types'
 
 
 type WindowWithElectron = Window & {
