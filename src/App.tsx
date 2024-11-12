@@ -7,14 +7,14 @@ import { Button } from '@mui/material'  // Card,Paper
 export default App
 import ServerConfigEditor from './ServerConfigEditor'
 import './App.css'
+import {ShowCalls,addCallFunc} from './components/ShowCalls'
+import {LogDialog,addLogFunc} from './components/LogDialog'
 
-interface Props {
-}
+// import {packets} from "knotfree-ts-lib"
+// import {types} from "knotfree-ts-lib"
+import * as packets from 'knotfree-ts-lib/src/packets'
+import * as types from 'knotfree-ts-lib/src/types'
 
-import * as packets from "./knotprotocol/packets"
-import * as types from "./Types"
-
-var addCallFunc = (p: packets.Universal) => { console.log("add call needs OVERRIDE", p.toString()) }
 
 type WindowWithElectron = Window & {
     electronAPI: {
@@ -35,10 +35,11 @@ console.log("onUpdateTestTopic", electronAPI.onUpdateTestTopic)
 var onUpdateTestTopic = electronAPI.onUpdateTestTopic
 // set our callback in onUpdateTestTopic
 onUpdateTestTopic((value) => {
-    const p = packets.MakeUniversal(value)
-    const pstr = p.toString()
+    const u = value as packets.Universal
+    // const pstr = u.toString()
     // console.log("onUpdateTestTopic", pstr)
-    addCallFunc(p)
+    addCallFunc(u)
+    addLogFunc(u)
 })
 
 export var globalServerConfigList = types.EmptyServerConfigList
@@ -59,65 +60,14 @@ export function updateConfig(config: types.ServerConfigList) {
     globalServerConfigList = config
 }
 
-function ShowCalls(props: Props): ReactElement {
 
-    const [calls, setCalls] = useState([])
-    const [lastTime, setLastTime] = useState(new Date())
-
-    function updateCallsFuction(p: packets.Universal) {
-        // console.log("ShowCalls add call", p.toString())
-        if (p.commandType == "P") {
-
-            // todo: make Send class. Meanwhile, the payload is the third string
-            const payload = Buffer.from(p.data[2]).toString('utf8')
-
-            var newCalls = [...calls]
-            if (newCalls.length > 10) {
-                newCalls = newCalls.slice(1)
-            }
-            newCalls.push(payload)
-            setCalls(newCalls)
-            setLastTime(new Date())
-        }
-    }
-
-    useEffect(() => {
-        // console.log("ShowCalls useEffect")
-        addCallFunc = updateCallsFuction
-        return () => { };
-    }, [calls]);
-
-    function listCalls(): ReactElement {
-        // console.log("listCalls")
-        let componentArray = []
-        for (let i = 0; i < calls.length; i++) {
-            let c = calls[i]
-            const somejsx = (<li key={i}>{c.toString()}</li>)
-            componentArray.push(somejsx)
-        }
-        return (
-            <>
-                {componentArray}
-            </>
-        )
-    }
-
-    return (
-        <>
-        {lastTime.toLocaleString()}
-        </>
-        // <div>
-        //     <h2>Calls</h2>
-        //     <ul>
-        //         {listCalls()}
-        //     </ul>
-        // </div>
-    );
-}
 
 var refreshConfig = (config: types.ServerConfigList) => { console.log("refreshConfig not set") }
 
 function App(): ReactElement {
+
+    const [isStars, setIsStars] = React.useState(false);
+    const [showLog,setShowLog] = React.useState(false)
 
     const [serverConfigList, setServerConfigList] = useState(globalServerConfigList)
     const [dirty, setDirty] = useState(false);
@@ -148,7 +98,7 @@ function App(): ReactElement {
         // updateConfig(serverConfigList)
         setDirty(true)
     }
-    function onTokenSave( ) {
+    function onTokenSave() {
         updateConfig(serverConfigList)
         setDirty(false)
     }
@@ -166,20 +116,22 @@ function App(): ReactElement {
 
             Add access token here:
             <input
-                className = "token-input"
+                className="token-input"
                 type="text"
                 placeholder="Name"
                 value={serverConfigList.token}
                 onChange={onTokenChange}
             />
-            <Button disabled = {!dirty} onClick={() => onTokenSave()}>Save Change</Button>
+            <Button disabled={!dirty} onClick={() => onTokenSave()}>Save Change</Button>
 
             <div>
-            Last message from server was on:<ShowCalls />
+                Last message from server was on:<ShowCalls />
             </div>
-            {/* Your content here */}
-            {/* {JSON.stringify(serverConfigList)}
-        <Button onClick={() => onUpdateConfigButton()}>Update Config</Button> */}
+            <Button onClick={() => setShowLog(true)}>Show Log</Button>
+
+            <LogDialog open = {showLog}
+                onClose={()=>setShowLog(false)}
+                />
         </div>
     );
 };

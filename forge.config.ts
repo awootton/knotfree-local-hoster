@@ -14,7 +14,9 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    osxSign: {} // object must exist even if empty
   },
+
   rebuildConfig: {},
   makers: [
       new MakerSquirrel({}), 
@@ -27,7 +29,16 @@ const config: ForgeConfig = {
           background: './assets/dmg-background.png',
           format: 'ULFO'
         }
-      }
+      },
+      {
+        name: '@electron-forge/maker-deb',
+        config: {
+          options: {
+            maintainer: 'Alan Tracey Wootton',
+            homepage: 'https://github.com/awootton/knotfree-local-hoster'
+          }
+        }
+      }    
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
@@ -59,6 +70,22 @@ const config: ForgeConfig = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      // platforms: ['darwin', 'linux'],
+      config: {
+        repository: {
+          owner: 'awootton',
+          name: 'knotfree-local-hoster',
+        },
+        prerelease: true
+      }
+    }
+  ]
+
+
 };
 
 export default config;

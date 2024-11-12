@@ -4,7 +4,7 @@
 window.Buffer = window.Buffer || require("buffer").Buffer;
 import { contextBridge, ipcRenderer } from 'electron'
 
-import * as types from './Types'
+import {types} from 'knotfree-ts-lib'
 
 console.log("in preload.ts in the renderer process")
 

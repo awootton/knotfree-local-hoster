@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import * as types from './Types'
-import { Button } from '@mui/material'
-import { deepStrictEqual } from 'assert'
-import { parse } from 'path'
+import {types} from 'knotfree-ts-lib'
+// import { Button } from '@mui/material'
+// import { deepStrictEqual } from 'assert'
+// import { parse } from 'path'
 
 type Props = {
     serverConfig: types.ServerConfigList
