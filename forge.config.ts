@@ -12,10 +12,21 @@ import { Configuration } from 'webpack';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
+
 const config: ForgeConfig = {
+  
   packagerConfig: {
     asar: true,
-    osxSign: {} // object must exist even if empty
+    osxSign: {
+
+      identity: "Developer ID Application: alan wootton (2M7QJP6W4N)",
+      //  type: 'distribution', // 'development',
+    } ,// object must exist even if empty
+    osxNotarize: {
+      appleApiKeyId: "AB9WR6X638",
+      appleApiIssuer: "59b45171-dcad-480b-9f9e-8700e368acc6",
+      appleApiKey: "/Users/awootton/atw_private/AuthKey_AB9WR6X638.p8",
+    },
   },
 
   rebuildConfig: {},
@@ -49,6 +60,7 @@ const config: ForgeConfig = {
       name: '@electron-forge/plugin-webpack',
       config: {
         mainConfig: mainConfig , // './webpack.main.config.ts',
+        devContentSecurityPolicy: "connect-src 'self' * 'unsafe-eval'",
         renderer: {
           config: rendererConfig, // './webpack.renderer.config.ts',
           entryPoints: [{
@@ -80,7 +92,7 @@ const config: ForgeConfig = {
   publishers: [
     {
       name: '@electron-forge/publisher-github',
-      // platforms: ['darwin', 'linux'],
+      platforms: ['darwin', 'linux'],
       config: {
         repository: {
           owner: 'awootton',
@@ -95,24 +107,3 @@ const config: ForgeConfig = {
 };
 
 export default config;
-
-// const myWebpackConfig : WebpackPluginConf = {
-//   mainConfig : {
-
-//   },
-//   renderer: {
-//   config: rendererConfig,
-//   entryPoints: [
-//     {
-//       html: './src/index.html',
-//       js: './src/renderer.ts',
-//       name: 'main_window',
-//       preload: {
-//         js: './src/preload.ts',
-//       },
-//     },
-//   ],
-// },
-// }
-
-

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+
 import {types} from 'knotfree-ts-lib'
-// import { Button } from '@mui/material'
-// import { deepStrictEqual } from 'assert'
-// import { parse } from 'path'
+// import * as types from './knotfree-ts-lib/types'
+
+
+import { NameStatus } from './components/NameStatus';
 
 type Props = {
     serverConfig: types.ServerConfigList
@@ -33,16 +35,20 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
     // console.log("ServerConfigEditor props items", props.serverConfig.items)
     // console.log("ServerConfigEditor items", items)
 
-
     const [dirty, setDirty] = useState(false);
 
     const handleAddItem = () => {
         const tmp = {
             name: newItem.name,
-            port: parseInt(newItem.port,10),
+            port: parseInt(newItem.port, 10),
             host: newItem.host
         }
-        const newConfig: types.ServerConfigList = { token: props.serverConfig.token, items: [...items, { ...tmp }] }
+        const newConfig: types.ServerConfigList = {
+            token: props.serverConfig.token,
+            ownerPublicKey: props.serverConfig.ownerPublicKey,
+            ownerPrivateKey: props.serverConfig.ownerPrivateKey,
+            items: [...items, { ...tmp }]
+        }
         setItems(newConfig.items)
         console.log("handleAddItem items will be", items)
         setNewItem({ name: '', port: '', host: '127.0.0.1' })
@@ -71,7 +77,7 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
 
     const handleEditPortItem = (index: number, value: string) => {
         const updatedItems = [...items];
-        updatedItems[index].port = parseInt(filterInt(value),10)
+        updatedItems[index].port = parseInt(filterInt(value), 10)
         setItems(updatedItems);
         // var newConfig: types.ServerConfigList = { token: props.serverConfig.token, items: items }
         //console.log("onUpdate newConfig", newConfig);
@@ -80,8 +86,13 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
     };
 
     const handleDeleteItem = (index: number) => {
-        const newItems = items.filter((_, i) => i !== index);
-        var newConfig: types.ServerConfigList = { token: props.serverConfig.token, items: newItems }
+        const newItems = items.filter((_, i) => (i as number) !== index);
+        var newConfig: types.ServerConfigList = {
+            token: props.serverConfig.token,
+            ownerPublicKey: props.serverConfig.ownerPublicKey,
+            ownerPrivateKey: props.serverConfig.ownerPrivateKey,
+            items: newItems
+        }
         console.log("handleDeleteItem newConfig", newConfig);
         setItems(newConfig.items)
         saveChanges(newConfig)
@@ -100,7 +111,7 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
             <h2>Server Config Editor</h2>
             <div>
                 <input
-                    className = "name-input"
+                    className="name-input"
                     type="text"
                     placeholder="Name"
                     value={newItem.name}
@@ -112,17 +123,25 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
                     value={newItem.port}
                     onChange={(e) => setNewItem({ ...newItem, port: filterInt(e.target.value) })}
                 />
+
                 <button onClick={handleAddItem}>Add Item</button>
+                <NameStatus
+                    aName={newItem.name}
+                    nameType={'plain'}
+                    refreshCount={0}
+                    prefix={'https://'} // TODO: make the server be a parameter.
+                    serverName={'knotfree.net/'}
+                />
                 {/* <Button onClick={saveChanges} disabled={!dirty}>Save Changes</Button> */}
             </div>
             <ul>
                 {items.map((item, index) => (
                     <li key={index}>
                         <input
-                            className = "name-input"
+                            className="name-input"
                             type="text"
-                            value={item.name}
-                            onChange={(e) => handleEditNameItem(index, e.target.value)}
+                            value={(item as types.ServerConfigItem).name}
+                            onChange={(e) => handleEditNameItem(index as number, e.target.value)}
                         />
                         <input
                             type="text"

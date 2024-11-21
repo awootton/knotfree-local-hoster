@@ -1,0 +1,11 @@
+div.canvas {
+    min-width: 768;
+    min-height: 768;
+    border-color: black;
+    border-width: 1px;
+}
+
+.stars-dialog {
+    min-width: 768px;
+    min-height: 1024px;
+}

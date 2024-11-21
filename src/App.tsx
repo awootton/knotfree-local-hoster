@@ -10,10 +10,17 @@ import './App.css'
 import {ShowCalls,addCallFunc} from './components/ShowCalls'
 import {LogDialog,addLogFunc} from './components/LogDialog'
 
+import * as starz from './components/StarsDialog'
+
 import {packets} from "knotfree-ts-lib"
 import {types} from "knotfree-ts-lib"
-// damn you webpack5, bite me import * as packets from 'knotfree-ts-lib/src/packets'
-// import * as types from 'knotfree-ts-lib/src/types'
+import {getFreeToken} from 'knotfree-ts-lib'
+
+// damn you webpack5, bite me.
+
+// import * as packets from './knotfree-ts-lib/packets'
+// import * as types from './knotfree-ts-lib/types'
+// import {getFreeToken} from './knotfree-ts-lib/AccessTokenPageUtil'
 
 
 type WindowWithElectron = Window & {
@@ -60,8 +67,6 @@ export function updateConfig(config: types.ServerConfigList) {
     globalServerConfigList = config
 }
 
-
-
 var refreshConfig = (config: types.ServerConfigList) => { console.log("refreshConfig not set") }
 
 function App(): ReactElement {
@@ -76,13 +81,27 @@ function App(): ReactElement {
             console.log("refreshConfig", config)
             const newState = { ...config }
             setServerConfigList(newState)
+
+            if ( !config.token || config.token.length < 200 ) {
+                // we have no token, so request one
+                console.log("need to get token")
+                getFreeToken("https://","knotfree.net/",(ok: boolean, tok: string) => {
+                    if (ok) {
+                        console.log("got token",tok)
+                    
+                        const newState = { ...config,token:tok }
+                        setServerConfigList(newState)
+                        updateConfig(newState)
+                    }
+                },config.ownerPublicKey?config.ownerPublicKey:"",
+                config.ownerPrivateKey?config.ownerPrivateKey:"")
+            }
         }
+
         return () => { };
     }, [serverConfigList]);
 
-    if (serverConfigList.token == "default-config-token-needs-replacing") {
-        requestConfig() // this happens when hot changes are made. The UI swaps but has no config
-    }
+    
 
     function onUpdateConfigButton() {
         console.log("onUpdateConfigButton")
@@ -129,9 +148,19 @@ function App(): ReactElement {
             </div>
             <Button onClick={() => setShowLog(true)}>Show Log</Button>
 
+            <Button onClick={() => setIsStars(true)}>an egg</Button>
+
             <LogDialog open = {showLog}
                 onClose={()=>setShowLog(false)}
                 />
+
+            <starz.StarsDialog 
+                open = {isStars}
+                title="atw was here"
+                onClose={()=>{setIsStars(false)}}
+                onConfirm={()=>{}}
+            />
+
         </div>
     );
 };

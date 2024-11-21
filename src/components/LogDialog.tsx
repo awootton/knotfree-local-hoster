@@ -5,7 +5,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/
 import './LogDialog.css'
 
 import { packets } from 'knotfree-ts-lib'
-// import * as packets from 'knotfree-ts-lib/src/packets' // this one is better when it works
+// import * as packets from '../knotfree-ts-lib/packets'
 
 var logArray: packets.Universal[] = []
 export function addLogFunc(u: packets.Universal) {
