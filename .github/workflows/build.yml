@@ -10,9 +10,9 @@ jobs:
         os:
           [
             # { name: 'debian', image: 'debian-latest' },
-            { name: 'linux', image: 'ubuntu-latest' },
+            { name: 'linux', image: 'ubuntu-latest' }, # this also built deb
             # { name: 'windows', image: 'windows-latest' },
-            # { name: 'macos', image: 'macos-latest' },
+            # { name: 'macos', image: 'macos-latest' }, # do this manually where the keys live
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
