@@ -1,8 +1,8 @@
 
 import React, { ReactElement, useState, useEffect } from "react"
 
-import { packets } from 'knotfree-ts-lib'
-/// import * as packets from '../knotfree-ts-lib/packets'
+// import { packets } from 'knotfree-ts-lib'
+import * as packets from '../knotfree-ts-lib/packets'
 
 // We're getting rid of this one. See LogDialog.
 

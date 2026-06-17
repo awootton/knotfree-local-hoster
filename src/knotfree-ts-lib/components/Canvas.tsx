@@ -1,8 +1,4 @@
-
-import React from 'react'
-
-import  { useRef, useEffect } from 'react'
-
+import React, { useRef, useEffect } from 'react'
 import './Canvas.css'
 
 export type Props = {
@@ -42,9 +38,6 @@ const Canvas = (props: Props) => {
     const midx = ctx.canvas.width /2
     const midy = ctx.canvas.height /2
 
-    const maxx =  ctx.canvas.width
-    const maxy =  ctx.canvas.height
-
     for (let i = 0; i < 1000; i++) {
       if (stars.length <= i) {
         let star = {
@@ -66,10 +59,9 @@ const Canvas = (props: Props) => {
         ctx.fillRect(xt, yt, size, size);
       }
 
-      // star.z = star.z - 1 / 50000
-      star.z = star.z - 1 / 40000 // faster
+      star.z = star.z - 1 / 50000
 
-      if (xt < 0 || xt >= maxx || yt < 0 || yt >= maxy || star.z <= 0) {
+      if (xt < 0 || xt >= 1024 || yt < 0 || yt >= 1024 || star.z <= 0) {
         star.x = 2 * Math.random() - 1
         star.y = 2 * Math.random() - 1
         star.z = Math.random() / 100

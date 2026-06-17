@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material'
 import './LogDialog.css'
 
-import { packets } from 'knotfree-ts-lib'
+import * as packets from "../knotfree-ts-lib/packets"
 // import * as packets from '../knotfree-ts-lib/packets'
 
 var logArray: packets.Universal[] = []

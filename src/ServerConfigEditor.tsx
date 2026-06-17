@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
-import {types} from 'knotfree-ts-lib'
-// import * as types from './knotfree-ts-lib/types'
-
+import * as types from './knotfree-ts-lib/types'
 
 import { NameStatus } from './components/NameStatus';
 
@@ -106,6 +104,21 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
         // setDirty(false); // Reset dirty state
     }
 
+    function showNameStatus() {
+        if ( newItem.name.length > 0  ) {
+            return (
+                <NameStatus
+                    aName={newItem.name}
+                    nameType={'plain'}
+                    refreshCount={0}
+                    prefix={'https://'} // TODO: make the server be a parameter.
+                    serverName={'knotfree.net/'}
+                />
+            );
+        } 
+        return (<>  </>)
+    }
+
     return (
         <div>
             <h2>Server Config Editor</h2>
@@ -125,13 +138,14 @@ const ServerConfigEditor: React.FC<Props> = (props: Props) => {
                 />
 
                 <button onClick={handleAddItem}>Add Item</button>
-                <NameStatus
+                {showNameStatus()}
+                {/* <NameStatus
                     aName={newItem.name}
                     nameType={'plain'}
                     refreshCount={0}
                     prefix={'https://'} // TODO: make the server be a parameter.
                     serverName={'knotfree.net/'}
-                />
+                /> */}
                 {/* <Button onClick={saveChanges} disabled={!dirty}>Save Changes</Button> */}
             </div>
             <ul>

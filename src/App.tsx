@@ -10,11 +10,11 @@ import './App.css'
 import {ShowCalls,addCallFunc} from './components/ShowCalls'
 import {LogDialog,addLogFunc} from './components/LogDialog'
 
-import * as starz from './components/StarsDialog'
+import * as starz from './knotfree-ts-lib/components/StarsDialog'
 
-import {packets} from "knotfree-ts-lib"
-import {types} from "knotfree-ts-lib"
-import {getFreeToken} from 'knotfree-ts-lib'
+import * as packets from "./knotfree-ts-lib/packets"
+import * as types from "./knotfree-ts-lib/types"
+import {getFreeToken} from './knotfree-ts-lib/AccessTokenPageUtil'
 
 // damn you webpack5, bite me.
 

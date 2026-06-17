@@ -3,8 +3,8 @@ import React, { FC, ReactElement, useEffect } from 'react'
 
 import useFetch from "react-fetch-hook";
 
-import {types} from 'knotfree-ts-lib'
-// import * as types from '../knotfree-ts-lib/types'
+// import {types} from 'knotfree-ts-lib'
+import * as types from '../knotfree-ts-lib/types'
 
 // TODO: move to lib and unify with net-homepage
 

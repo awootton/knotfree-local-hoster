@@ -1,15 +1,12 @@
-import * as React from 'react'
-import { ReactElement } from 'react'
+import React from 'react';
+import { FC, ReactElement } from 'react'
 
 // material ui
 import {
     Dialog,
-    DialogTitle
 } from '@mui/material';
 
 import Canvas from './Canvas'
-import './Canvas.css'
-
 
 type Props = {
     open: boolean
@@ -19,18 +16,18 @@ type Props = {
     onConfirm: () => any
 }
 
-export function StarsDialog(props: Props): ReactElement {
-    // maxWidth="sm" ?
+export const StarsDialog : FC<Props> = ( props: Props): React.ReactElement => {
+
     return (
-        <div className='stars-dialog'>
-            <Dialog open={props.open}  fullWidth
+        <>
+            <Dialog open={props.open} maxWidth="sm" fullWidth
                 onClose={props.onClose}
             >
-                <DialogTitle>{props.title}</DialogTitle>
-                {/* Hello world starz - Alan Wootton was here. */}
+                {/* <DialogTitle>{props.title}</DialogTitle> */}
+                Hello world starz - Alan Wootton was here.
                 <Canvas />
             </Dialog>
-        </div>
+        </>
     );
 };
 

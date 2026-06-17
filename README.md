@@ -11,12 +11,9 @@ Then you will have a wordpress accessible at http://john-q-blog.knotfree.net
 
 the yarn publish crashes so use 'npx electron-forge publish' and then wait ...
 
-for development ```yarn remove knotfree-ts-lib``` 
-and then ```ln -s /Users/awootton/workspace/knotfree-ts-lib/src ./src/knotfree-ts-lib ```
-and then change the code. 
-
-for releases ```rm ./src/knotfree-ts-lib```
-then publish the lib ! 
-and then ```yarn add knotfree-ts-lib```
-and fix the code
+<!--    the knotfree-ts-lib is one big link error waiting to happen. 
+I've checked it in with the project.
+sync with ~/workspace/knotfree-ts-lib manually 
+ 
+-->
 
