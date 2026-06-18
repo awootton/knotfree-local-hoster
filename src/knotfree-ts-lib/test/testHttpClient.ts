@@ -1,5 +1,6 @@
 // import {assert} from 'chai';
-import assert from 'node:assert/strict';
+// import assert from 'node:assert/strict';
+import { ok, strictEqual, equal } from 'node:assert';
 
 
 import * as knothttp from '../httpClient'
@@ -45,7 +46,7 @@ function doTheRest() {
         await doATestGet()
         console.log("gotData", gotData.toString())
         const ss = gotData.toString().includes("Directory listing for")
-        assert.equal(ss, true);
+        equal(ss, true);
 
         gadget.httpMonger.packer.restarter.dontReconnect = true
         gadget.httpMonger.packer.restarter.connectInfo.private_client_not_for_use.end()

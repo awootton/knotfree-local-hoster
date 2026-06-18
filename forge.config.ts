@@ -12,6 +12,7 @@ import { Configuration } from 'webpack';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
+// Where are the RPM and the DEB that I thought was being made?
 
 const config: ForgeConfig = {
   
@@ -23,11 +24,22 @@ const config: ForgeConfig = {
       //  type: 'distribution', // 'development',
     } ,// object must exist even if empty
     osxNotarize: {
-      appleApiKeyId: "AB9WR6X638",
+      // these are new as of 6/18/26
+      appleApiKeyId: "Z36JKUKV8U",
       appleApiIssuer: "59b45171-dcad-480b-9f9e-8700e368acc6",
-      appleApiKey: "/Users/awootton/atw_private/AuthKey_AB9WR6X638.p8",
+      appleApiKey: "/Users/awootton/atw_private/AuthKey_Z36JKUKV8U.p8",
     },
   },
+
+  // AB9WR6X638 was the old expired one from 2024
+  // Z36JKUKV8U is admin role
+  // UFAFCTKK9F was app manager role. didn't work. did work!
+
+  // ignore this error" An unhandled rejection has occurred inside Forge:
+  // HttpError: Bad credentials - https://docs.github.com/rest
+  // because it's for github and the app was still built.
+  // I have a GITHUB_TOKEN already so it's pushing a release..
+  
 
   rebuildConfig: {},
   makers: [
@@ -48,7 +60,8 @@ const config: ForgeConfig = {
         options: {
           maintainer: 'Alan Tracey Wootton',
           homepage: 'https://github.com/awootton/knotfree-local-hoster'
-        }
+        },
+        authToken: process.env.GITHUB_TOKEN,
       }
     }
   ],
@@ -98,6 +111,7 @@ const config: ForgeConfig = {
           owner: 'awootton',
           name: 'knotfree-local-hoster',
         },
+        authToken: process.env.GITHUB_TOKEN,
         prerelease: true
       }
     }

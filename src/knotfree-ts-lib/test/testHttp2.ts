@@ -1,6 +1,7 @@
 
 // import {assert} from 'chai'; I hate this crap
-import assert from 'node:assert/strict';
+// import assert from 'node:assert/strict';
+import { ok, strictEqual, equal } from 'node:assert';
 
 
 // npx tsx src/test/testHttp2.ts
@@ -102,21 +103,21 @@ send.Payload = Buffer.from(sampleGet + samplePost)
 send.toBackingUniversal()
 httpMon.packer.onPacket(httpMon.packer, send.backingUniversal)
 
-assert.equal(messagesReceivedCount, 2)
+equal(messagesReceivedCount, 2)
 
 messagesReceivedCount = 0
 var send = packets.MakeSend()
 send.Payload = Buffer.from(sampleChunkedData + sampleGet)
 send.toBackingUniversal()
 httpMon.packer.onPacket(httpMon.packer, send.backingUniversal)
-assert.equal(messagesReceivedCount, 2)
+equal(messagesReceivedCount, 2)
 
 messagesReceivedCount = 0
 var send = packets.MakeSend()
 send.Payload = Buffer.from(sampleChunkedData2 + sampleGet)
 send.toBackingUniversal()
 httpMon.packer.onPacket(httpMon.packer, send.backingUniversal)
-assert.equal(messagesReceivedCount, 2)
+equal(messagesReceivedCount, 2)
 
 
 setTimeout(() => {

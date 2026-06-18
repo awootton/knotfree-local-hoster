@@ -13,7 +13,7 @@ try {
     // 2. Replace every occurrence of \r with char 13
     // Because \r literally evaluates to char 13, you can replace it with itself, 
     // or use String.fromCharCode(13)
-    // I can't beleive how hard this is. 
+    // I can't beleive how hard this is since it's actually really stupid. 
     // const updatedContent = fileContent.replace(/\r/g, String.fromCharCode(13));
 
     const charCodeBackslash: number = "\\".charCodeAt(0);
