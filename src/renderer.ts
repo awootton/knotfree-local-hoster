@@ -25,12 +25,6 @@
  *  });
  * ```
  */
-import React from "react";
-import ReactDOM from 'react-dom/client';
-import { ReactElement, FC, useState, useEffect } from "react";
-
-
-import './index.css';
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
@@ -39,18 +33,3 @@ console.log('👋 This message is being logged by "renderer.js", included via we
 import './react'
 
 console.log('👋 This message is from index.tsx react is loaded');
-
-// const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
-// console.log('👋 This message is from index.tsx root is ', root);
-
-// root.render(
-// //   <React.StrictMode>
-//     <App />
-// //   </React.StrictMode>
-// );
-
-
-
-// import './App';
-

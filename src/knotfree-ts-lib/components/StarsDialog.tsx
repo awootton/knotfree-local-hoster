@@ -4,7 +4,7 @@ import { FC, ReactElement } from 'react'
 // material ui
 import {
     Dialog,
-} from '@mui/material';
+} from '@mui/material'
 
 import Canvas from './Canvas'
 
@@ -24,7 +24,7 @@ export const StarsDialog : FC<Props> = ( props: Props): React.ReactElement => {
                 onClose={props.onClose}
             >
                 {/* <DialogTitle>{props.title}</DialogTitle> */}
-                Hello world starz - Alan Wootton was here.
+                Alan Tracey Wootton was here.
                 <Canvas />
             </Dialog>
         </>
